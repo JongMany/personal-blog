@@ -1,6 +1,6 @@
-export { vars, lightTheme, darkTheme } from "./theme.css";
-export { sprinkles } from "./sprinkles.css";
 export type { Sprinkles } from "./sprinkles.css";
+export { sprinkles } from "./sprinkles.css";
+export { darkTheme, lightTheme, vars } from "./theme.css";
 
 export const siteConfig = {
   name: "Blog",

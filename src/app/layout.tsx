@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
-import { siteConfig } from "@/shared/config";
 import "@/shared/config/global.css";
 import "./globals.css";
+
+import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
+
+import { siteConfig } from "@/shared/config";
 
 export const metadata: Metadata = {
   title: {

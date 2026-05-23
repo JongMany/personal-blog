@@ -1,4 +1,5 @@
-import { globalStyle, globalFontFace } from "@vanilla-extract/css";
+import { globalFontFace, globalStyle } from "@vanilla-extract/css";
+
 import { vars } from "./theme.css";
 
 globalFontFace("Pretendard", {
