@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build",
+    "dev": "concurrently \"velite dev\" \"next dev --webpack\"",
+    "build": "velite build && next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -53,6 +53,7 @@
     "@types/react-dom": "^19",
     "@vanilla-extract/next-plugin": "^2.5.2",
     "babel-plugin-react-compiler": "^1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "eslint-config-prettier": "^10.1.8",
