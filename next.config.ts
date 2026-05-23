@@ -1,5 +1,5 @@
-import type { NextConfig } from "next";
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
+import type { NextConfig } from "next";
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
@@ -18,10 +18,7 @@ class VeliteWebpackPlugin {
 }
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // @ts-expect-error — reactCompiler는 Next.js 16에서 실험적 옵션
-    reactCompiler: true,
-  },
+  reactCompiler: true,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   webpack: (config: any) => {
     config.plugins.push(new VeliteWebpackPlugin());

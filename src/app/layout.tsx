@@ -4,7 +4,11 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
+import { Footer } from "@/widgets/footer";
+import { Header } from "@/widgets/header";
 import { siteConfig } from "@/shared/config";
+
+import * as styles from "./layout.css";
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +40,9 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        {children}
+        <Header />
+        <main className={styles.main}>{children}</main>
+        <Footer />
         <Analytics />
       </body>
     </html>

@@ -7,9 +7,10 @@ export const siteConfig = {
   description: "개발 경험, 생각, 포트폴리오를 담는 개인 웹사이트",
   url: "https://yourdomain.com",
   author: {
-    name: "Your Name",
-    email: "your@email.com",
-    github: "https://github.com/yourusername",
+    name: "이종민",
+    email: "blackberry11191919@gmail.com",
+    github: "https://github.com/JongMany",
+    linkedin: "https://www.linkedin.com/in/%EC%A2%85%EB%AF%BC-%EC%9D%B4-557572284/",
   },
   categories: ["개발", "회고", "기록", "경제"] as const,
 } as const;
