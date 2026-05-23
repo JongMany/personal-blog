@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
+import { useViewCount } from "../model/useViewCount";
 import * as styles from "./ViewCount.css";
 
 interface Props {
@@ -9,13 +10,11 @@ interface Props {
 }
 
 export function ViewCount({ slug }: Props) {
-  const [views, setViews] = useState<number | null>(null);
+  const { views, fetchViews } = useViewCount(slug);
 
   useEffect(() => {
-    fetch(`/api/views/${slug}`)
-      .then((r) => r.json())
-      .then((d) => setViews(d.views));
-  }, [slug]);
+    fetchViews();
+  }, [fetchViews]);
 
   if (views === null) return null;
 

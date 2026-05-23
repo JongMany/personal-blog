@@ -1,6 +1,6 @@
 import { globalFontFace, globalStyle } from "@vanilla-extract/css";
 
-import { vars } from "./theme.css";
+import { darkTheme, lightTheme, vars } from "./theme.css";
 
 globalFontFace("Pretendard", {
   src: "url('/fonts/PretendardVariable.woff2') format('woff2')",
@@ -58,3 +58,7 @@ globalStyle("hr", {
   border: "none",
   borderTop: `1px solid ${vars.color.divider2}`,
 });
+
+// rehype-pretty-code: 테마에 맞는 코드 블록만 표시
+globalStyle(`.${lightTheme} [data-theme="dark"]`, { display: "none" });
+globalStyle(`.${darkTheme} [data-theme="light"]`, { display: "none" });

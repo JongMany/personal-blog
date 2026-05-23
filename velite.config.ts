@@ -1,4 +1,5 @@
-import { defineConfig, defineCollection, s } from "velite";
+import rehypePrettyCode from "rehype-pretty-code";
+import { defineCollection, defineConfig, s } from "velite";
 
 const posts = defineCollection({
   name: "Post",
@@ -51,7 +52,7 @@ export default defineConfig({
   },
   collections: { posts, books },
   mdx: {
-    rehypePlugins: [],
+    rehypePlugins: [[rehypePrettyCode, { theme: { dark: "github-dark", light: "github-light" } }]],
     remarkPlugins: [],
   },
 });

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
+import { useViewCount } from "../model/useViewCount";
 import * as styles from "./ViewCount.css";
 
 interface Props {
@@ -9,24 +10,22 @@ interface Props {
 }
 
 export function ViewTracker({ slug }: Props) {
-  const [views, setViews] = useState<number | null>(null);
+  const { views, fetchViews } = useViewCount(slug);
 
   useEffect(() => {
-    const sessionKey = `viewed:${slug}`;
-    const alreadyViewed = sessionStorage.getItem(sessionKey);
-
-    if (alreadyViewed) {
-      fetch(`/api/views/${slug}`)
-        .then((r) => r.json())
-        .then((d) => setViews(d.views));
+    if (process.env.NODE_ENV === "development") {
+      fetchViews();
       return;
     }
 
+    const sessionKey = `viewed:${slug}`;
+    if (sessionStorage.getItem(sessionKey)) {
+      fetchViews();
+      return;
+    }
     sessionStorage.setItem(sessionKey, "1");
-    fetch(`/api/views/${slug}`, { method: "POST" })
-      .then((r) => r.json())
-      .then((d) => setViews(d.views));
-  }, [slug]);
+    fetchViews("POST");
+  }, [slug, fetchViews]);
 
   if (views === null) return null;
 

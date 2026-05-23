@@ -18,14 +18,14 @@ export const generateStaticParams = () =>
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug.endsWith(slug));
+  const post = posts.find((p) => p.slug.split("/").pop() === slug);
   if (!post) return {};
   return { title: post.title, description: post.summary };
 };
 
 export default async function BlogDetailPage({ params }: Props) {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug.endsWith(slug));
+  const post = posts.find((p) => p.slug.split("/").pop() === slug);
 
   if (!post) notFound();
 
