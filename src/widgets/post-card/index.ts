@@ -1,1 +1,1 @@
-export {};
+export { PostCard } from "./ui/PostCard";
