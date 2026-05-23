@@ -23,12 +23,14 @@ globalStyle("html", {
 });
 
 globalStyle("body", {
-  backgroundColor: vars.color.background,
-  color: vars.color.textPrimary,
-  lineHeight: vars.lineHeight.normal,
+  backgroundColor: vars.color.paperDefault,
+  color: vars.color.inkText,
+  lineHeight: vars.lineHeight.body,
   transition: `background-color ${vars.transition.base}, color ${vars.transition.base}`,
   wordBreak: "keep-all",
   overflowWrap: "break-word",
+  WebkitFontSmoothing: "antialiased",
+  MozOsxFontSmoothing: "grayscale",
 });
 
 globalStyle("a", {
@@ -50,4 +52,9 @@ globalStyle("button", {
   background: "none",
   border: "none",
   font: "inherit",
+});
+
+globalStyle("hr", {
+  border: "none",
+  borderTop: `1px solid ${vars.color.divider2}`,
 });

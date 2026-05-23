@@ -40,6 +40,7 @@ const responsiveProperties = defineProperties({
     fontSize: vars.fontSize,
     fontWeight: vars.fontWeight,
     lineHeight: vars.lineHeight,
+    letterSpacing: vars.letterSpacing,
     textAlign: ["left", "center", "right"],
   },
   shorthands: {
@@ -67,6 +68,17 @@ const borderProperties = defineProperties({
   },
 });
 
-export const sprinkles = createSprinkles(responsiveProperties, colorProperties, borderProperties);
+const shadowProperties = defineProperties({
+  properties: {
+    boxShadow: vars.shadow,
+  },
+});
+
+export const sprinkles = createSprinkles(
+  responsiveProperties,
+  colorProperties,
+  borderProperties,
+  shadowProperties
+);
 
 export type Sprinkles = Parameters<typeof sprinkles>[0];
