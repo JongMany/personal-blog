@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
-import { siteConfig } from "@/shared/config";
+import { darkTheme, lightTheme, siteConfig } from "@/shared/config";
 
 import * as styles from "./layout.css";
 
@@ -32,6 +32,15 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `(function(){
+  try {
+    var saved = localStorage.getItem('theme');
+    var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var isDark = saved === 'dark' || (!saved && dark);
+    document.documentElement.classList.add(isDark ? '${darkTheme}' : '${lightTheme}');
+  } catch(e) {}
+})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,6 +49,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Header />
         <main className={styles.main}>{children}</main>
         <Footer />
