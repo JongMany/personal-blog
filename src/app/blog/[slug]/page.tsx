@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
-import { ViewCounter } from "@/features/view-counter";
+import { ViewTracker } from "@/features/view-counter";
 import { MDXContent } from "@/shared/ui/MDXContent";
 
 import * as styles from "./page.css";
@@ -41,7 +41,7 @@ export default async function BlogDetailPage({ params }: Props) {
           <span className={styles.dot}>·</span>
           <span className={styles.metaItem}>{post.readingTime}분 읽기</span>
           <span className={styles.dot}>·</span>
-          <ViewCounter slug={slug} />
+          <ViewTracker slug={slug} />
         </div>
       </header>
       <div className={styles.prose}>

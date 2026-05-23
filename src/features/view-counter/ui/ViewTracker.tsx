@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-import * as styles from "./ViewCounter.css";
+import * as styles from "./ViewCount.css";
 
 interface Props {
   slug: string;
 }
 
-export function ViewCounter({ slug }: Props) {
+export function ViewTracker({ slug }: Props) {
   const [views, setViews] = useState<number | null>(null);
 
   useEffect(() => {

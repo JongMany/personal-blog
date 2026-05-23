@@ -1,2 +1,2 @@
 export { ViewCount } from "./ui/ViewCount";
-export { ViewCounter } from "./ui/ViewCounter";
+export { ViewTracker } from "./ui/ViewTracker";
