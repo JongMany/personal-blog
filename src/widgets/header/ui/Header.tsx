@@ -7,6 +7,7 @@ import * as styles from "./Header.css";
 
 const navLinks = [
   { href: "/blog", label: "블로그" },
+  { href: "/bits", label: "단상" },
   { href: "/books", label: "책" },
   { href: "/portfolio", label: "포트폴리오" },
   { href: "/resume", label: "이력서" },

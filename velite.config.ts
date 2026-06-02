@@ -24,6 +24,18 @@ const posts = defineCollection({
     })),
 });
 
+const bits = defineCollection({
+  name: "Bit",
+  pattern: "bits/**/*.mdx",
+  schema: s.object({
+    title: s.string(),
+    date: s.isodate(),
+    tags: s.array(s.string()).default([]),
+    slug: s.path(),
+    content: s.mdx(),
+  }),
+});
+
 const books = defineCollection({
   name: "Book",
   pattern: "books/**/*.mdx",
@@ -50,7 +62,7 @@ export default defineConfig({
     name: "[name]-[hash:8].[ext]",
     clean: true,
   },
-  collections: { posts, books },
+  collections: { posts, books, bits },
   mdx: {
     rehypePlugins: [[rehypePrettyCode, { theme: { dark: "github-dark", light: "github-light" } }]],
     remarkPlugins: [],
