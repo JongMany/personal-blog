@@ -50,11 +50,7 @@ export const listExiting = style({
   opacity: 0,
 });
 
-export const empty = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.inkTextSubtle,
-  paddingTop: "0.5rem",
-});
+export { empty } from "@/shared/ui/empty.css";
 
 /* 데스크톱 사이드바: 세로 목록 */
 export const sidebar = style({

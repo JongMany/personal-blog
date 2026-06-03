@@ -20,11 +20,7 @@ export const description = style({
   color: vars.color.inkTextSubtle,
 });
 
-export const empty = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.inkTextSubtle,
-  paddingTop: "0.5rem",
-});
+export { empty } from "@/shared/ui/empty.css";
 
 export const section = style({
   paddingBottom: "3rem",

@@ -40,8 +40,4 @@ export const list = style({
   paddingBottom: "4rem",
 });
 
-export const empty = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.inkTextSubtle,
-  paddingTop: "0.5rem",
-});
+export { empty } from "@/shared/ui/empty.css";
