@@ -4,12 +4,11 @@ import { vars } from "@/shared/config";
 
 export const root = style({
   display: "block",
-  padding: "1.75rem 0",
-  borderBottom: `1px solid ${vars.color.divider2}`,
+  padding: "1.5rem 0",
   transition: `opacity ${vars.transition.fast}`,
   selectors: {
     "&:hover": {
-      opacity: 0.6,
+      opacity: 0.55,
     },
   },
 });

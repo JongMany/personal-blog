@@ -3,13 +3,15 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "@/shared/config";
 
 export const article = style({
+  maxWidth: "42rem",
+  margin: "0 auto",
+  paddingTop: "2rem",
   paddingBottom: "5rem",
 });
 
 export const header = style({
-  paddingTop: "2.5rem",
+  paddingTop: "0.5rem",
   paddingBottom: "1.5rem",
-  borderBottom: `1px solid ${vars.color.divider2}`,
   marginBottom: "2rem",
 });
 

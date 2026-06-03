@@ -1,1 +1,1 @@
-export {};
+export { BookCard } from "./ui/BookCard";

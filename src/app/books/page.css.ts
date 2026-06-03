@@ -15,35 +15,33 @@ export const title = style({
   marginBottom: "0.375rem",
 });
 
-export const description = style({
+export const count = style({
   fontSize: vars.fontSize.sm,
   color: vars.color.inkTextSubtle,
+});
+
+export const yearGroup = style({
+  paddingTop: "2.5rem",
+});
+
+export const yearLabel = style({
+  fontSize: vars.fontSize.xs,
+  fontWeight: vars.fontWeight.semibold,
+  color: vars.color.inkTextSubtle,
+  letterSpacing: vars.letterSpacing.tight,
+  textTransform: "uppercase",
+  marginBottom: "0.5rem",
+});
+
+export const list = style({
+  maxWidth: "42rem",
+  margin: "0 auto",
+  paddingTop: "2rem",
+  paddingBottom: "4rem",
 });
 
 export const empty = style({
   fontSize: vars.fontSize.sm,
   color: vars.color.inkTextSubtle,
   paddingTop: "0.5rem",
-});
-
-export const section = style({
-  paddingBottom: "3rem",
-});
-
-export const wrapper = style({
-  maxWidth: "42rem",
-  margin: "0 auto",
-  paddingTop: "2rem",
-});
-
-export const dateGroup = style({
-  paddingTop: "2rem",
-});
-
-export const dateLabel = style({
-  fontSize: vars.fontSize.xs,
-  fontWeight: vars.fontWeight.medium,
-  color: vars.color.inkTextSubtle,
-  letterSpacing: vars.letterSpacing.normal,
-  marginBottom: "0.25rem",
 });

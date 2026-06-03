@@ -2,10 +2,15 @@ import { style } from "@vanilla-extract/css";
 
 import { vars } from "@/shared/config";
 
+export const page = style({
+  maxWidth: "42rem",
+  margin: "0 auto",
+  paddingTop: "2rem",
+});
+
 export const hero = style({
-  paddingTop: "3rem",
-  paddingBottom: "3rem",
-  borderBottom: `1px solid ${vars.color.divider2}`,
+  paddingTop: "2rem",
+  paddingBottom: "4rem",
 });
 
 export const greeting = style({
@@ -59,14 +64,15 @@ export const socialLink = style({
 });
 
 export const section = style({
-  paddingTop: "2.5rem",
+  paddingTop: "3rem",
+  paddingBottom: "1rem",
 });
 
 export const sectionHeader = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  marginBottom: "1.25rem",
+  marginBottom: "1.5rem",
 });
 
 export const sectionTitle = style({
@@ -92,4 +98,66 @@ export const empty = style({
   fontSize: vars.fontSize.sm,
   color: vars.color.inkTextSubtle,
   paddingTop: "0.5rem",
+});
+
+export const timeline = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.125rem",
+});
+
+export const timelineItem = style({});
+
+export const timelineLink = style({
+  display: "flex",
+  alignItems: "baseline",
+  gap: "1rem",
+  padding: "0.625rem 0",
+  borderRadius: vars.radius.md,
+  transition: `opacity ${vars.transition.fast}`,
+  selectors: {
+    "&:hover": {
+      opacity: 0.55,
+    },
+  },
+});
+
+export const timelineDate = style({
+  flexShrink: 0,
+  fontSize: vars.fontSize.xs,
+  color: vars.color.inkTextSubtle,
+  width: "5rem",
+  paddingTop: "0.1rem",
+});
+
+export const timelineTitle = style({
+  fontSize: vars.fontSize.sm,
+  fontWeight: vars.fontWeight.medium,
+  color: vars.color.inkText,
+  lineHeight: vars.lineHeight.heading,
+  letterSpacing: vars.letterSpacing.tight,
+});
+
+export const timelineMeta = style({
+  display: "flex",
+  alignItems: "baseline",
+  gap: "1rem",
+  flex: 1,
+  minWidth: 0,
+});
+
+export const timelineDot = style({
+  fontSize: vars.fontSize.xs,
+  color: vars.color.divider3,
+});
+
+export const timelineTags = style({
+  display: "flex",
+  gap: "0.375rem",
+  flexWrap: "wrap",
+});
+
+export const timelineTag = style({
+  fontSize: vars.fontSize.xs,
+  color: vars.color.inkTextSubtle,
 });

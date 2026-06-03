@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 
-import { PostCard } from "@/widgets/post-card";
-
-import * as styles from "./page.css";
+import { BlogListView } from "./_components/BlogListView";
 
 import { posts } from "#velite";
 
@@ -13,28 +11,16 @@ export const metadata: Metadata = {
 
 const sortedPosts = [...posts]
   .filter((p) => !p.draft)
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .map((p) => ({
+    slug: p.slug.split("/").at(-1) ?? "",
+    title: p.title,
+    summary: p.summary,
+    date: p.date,
+    category: p.category,
+    readingTime: p.readingTime,
+  }));
 
 export default function BlogListPage() {
-  return (
-    <>
-      <header className={styles.header}>
-        <h1 className={styles.title}>블로그</h1>
-        <p className={styles.count}>총 {sortedPosts.length}편</p>
-      </header>
-      <div className={styles.list}>
-        {sortedPosts.map((post) => (
-          <PostCard
-            key={post.slug}
-            slug={post.slug.split("/").pop()!}
-            title={post.title}
-            summary={post.summary}
-            date={post.date}
-            category={post.category}
-            readingTime={post.readingTime}
-          />
-        ))}
-      </div>
-    </>
-  );
+  return <BlogListView posts={sortedPosts} />;
 }

@@ -22,5 +22,10 @@ export const count = style({
 
 export const list = style({
   paddingBottom: "4rem",
-  borderTop: `1px solid ${vars.color.divider2}`,
+});
+
+export const empty = style({
+  fontSize: vars.fontSize.sm,
+  color: vars.color.inkTextSubtle,
+  paddingTop: "0.5rem",
 });

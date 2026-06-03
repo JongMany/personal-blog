@@ -11,12 +11,11 @@ export const article = style({
 
 export const header = style({
   paddingTop: "2.5rem",
-  paddingBottom: "2rem",
-  borderBottom: `1px solid ${vars.color.divider2}`,
+  paddingBottom: "2.5rem",
   marginBottom: "2.5rem",
 });
 
-export const category = style({
+export const genre = style({
   fontSize: vars.fontSize.xs,
   fontWeight: vars.fontWeight.medium,
   color: vars.color.primary,
@@ -29,7 +28,13 @@ export const title = style({
   color: vars.color.inkText,
   letterSpacing: vars.letterSpacing.tight,
   lineHeight: vars.lineHeight.heading,
-  marginBottom: "1rem",
+  marginBottom: "0.5rem",
+});
+
+export const author = style({
+  fontSize: vars.fontSize.md,
+  color: vars.color.inkTextLow,
+  marginBottom: "1.25rem",
 });
 
 export const meta = style({
@@ -37,6 +42,7 @@ export const meta = style({
   alignItems: "center",
   gap: "0.5rem",
   flexWrap: "wrap",
+  marginBottom: "1.25rem",
 });
 
 export const metaItem = style({
@@ -46,7 +52,21 @@ export const metaItem = style({
 
 export const dot = style({
   fontSize: vars.fontSize.sm,
-  color: vars.color.inkTextSubtle,
+  color: vars.color.divider3,
+});
+
+export const tags = style({
+  display: "flex",
+  gap: "0.375rem",
+  flexWrap: "wrap",
+});
+
+export const tag = style({
+  fontSize: vars.fontSize.xs,
+  color: vars.color.primary,
+  backgroundColor: vars.color.primaryLow,
+  borderRadius: vars.radius.xs,
+  padding: "0.125rem 0.5rem",
 });
 
 export const prose = style({

@@ -22,29 +22,36 @@ const grouped = sortedBits.reduce<Record<string, typeof sortedBits>>((acc, bit) 
   return acc;
 }, {});
 
-export default function BitsListPage() {
+const dates = Object.keys(grouped);
+
+export default function BitsPage() {
   return (
-    <>
+    <div className={styles.wrapper}>
       <header className={styles.header}>
         <h1 className={styles.title}>단상</h1>
-        <p className={styles.description}>배운 것들을 짧게 기록합니다. 총 {bits.length}개</p>
+        <p className={styles.description}>배운 것들을 짧게 기록합니다.</p>
       </header>
-      <div className={styles.section}>
-        {Object.entries(grouped).map(([date, items]) => (
-          <div key={date} className={styles.dateGroup}>
-            <p className={styles.dateLabel}>{date}</p>
-            {items.map((bit) => (
-              <BitCard
-                key={bit.slug}
-                slug={bit.slug.split("/").pop()!}
-                title={bit.title}
-                date={bit.date}
-                tags={bit.tags}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </>
+
+      {dates.length === 0 ? (
+        <p className={styles.empty}>아직 기록된 단상이 없어요.</p>
+      ) : (
+        <div className={styles.section}>
+          {dates.map((date) => (
+            <div key={date} className={styles.dateGroup}>
+              <p className={styles.dateLabel}>{date}</p>
+              {grouped[date].map((bit) => (
+                <BitCard
+                  key={bit.slug}
+                  slug={bit.slug.split("/").at(-1) ?? ""}
+                  title={bit.title}
+                  date={bit.date}
+                  tags={bit.tags}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
