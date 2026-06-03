@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BookCard } from "@/widgets/book-card";
 import { PostCard } from "@/widgets/post-card";
 import { siteConfig } from "@/shared/config";
+import { slugTail } from "@/shared/lib";
 import { GithubIcon } from "@/shared/ui/icons/GithubIcon";
 import { LinkedinIcon } from "@/shared/ui/icons/LinkedinIcon";
 
@@ -69,7 +70,7 @@ export default function HomePage() {
           recentPosts.map((post) => (
             <PostCard
               key={post.slug}
-              slug={post.slug.split("/").at(-1) ?? ""}
+              slug={slugTail(post.slug)}
               title={post.title}
               summary={post.summary}
               date={post.date}
@@ -92,10 +93,10 @@ export default function HomePage() {
         ) : (
           <div className={styles.timeline}>
             {recentBits.map((bit) => {
-              const slugTail = bit.slug.split("/").at(-1) ?? "";
+              const tail = slugTail(bit.slug);
               return (
                 <div key={bit.slug} className={styles.timelineItem}>
-                  <Link href={`/bits/${slugTail}`} className={styles.timelineLink}>
+                  <Link href={`/bits/${tail}`} className={styles.timelineLink}>
                     <time className={styles.timelineDate} dateTime={bit.date}>
                       {new Date(bit.date).toLocaleDateString("ko-KR", {
                         month: "short",

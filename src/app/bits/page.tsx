@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { BitCard } from "@/widgets/bit-card";
+import { formatDate, slugTail } from "@/shared/lib";
 
 import * as styles from "./page.css";
 
@@ -16,7 +17,7 @@ const sortedBits = [...bits].sort(
 );
 
 const grouped = sortedBits.reduce<Record<string, typeof sortedBits>>((acc, bit) => {
-  const key = new Date(bit.date).toLocaleDateString("ko-KR");
+  const key = formatDate(bit.date);
   if (!acc[key]) acc[key] = [];
   acc[key].push(bit);
   return acc;
@@ -42,7 +43,7 @@ export default function BitsPage() {
               {grouped[date].map((bit) => (
                 <BitCard
                   key={bit.slug}
-                  slug={bit.slug.split("/").at(-1) ?? ""}
+                  slug={slugTail(bit.slug)}
                   title={bit.title}
                   date={bit.date}
                   tags={bit.tags}

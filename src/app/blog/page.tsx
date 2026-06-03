@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { slugTail } from "@/shared/lib";
+
 import { BlogListView } from "./_components/BlogListView";
 
 import { posts } from "#velite";
@@ -13,7 +15,7 @@ const sortedPosts = [...posts]
   .filter((p) => !p.draft)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .map((p) => ({
-    slug: p.slug.split("/").at(-1) ?? "",
+    slug: slugTail(p.slug),
     title: p.title,
     summary: p.summary,
     date: p.date,

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
+import { formatDate, slugTail } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
@@ -14,19 +15,18 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () =>
-  books.map((book) => ({ slug: book.slug.split("/").pop() }));
+export const generateStaticParams = () => books.map((book) => ({ slug: slugTail(book.slug) }));
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const book = books.find((b) => b.slug.split("/").pop() === slug);
+  const book = books.find((b) => slugTail(b.slug) === slug);
   if (!book) return {};
   return { title: `${book.title} — ${book.author}` };
 };
 
 export default async function BookDetailPage({ params }: Props) {
   const { slug } = await params;
-  const book = books.find((b) => b.slug.split("/").pop() === slug);
+  const book = books.find((b) => slugTail(b.slug) === slug);
 
   if (!book) notFound();
 
@@ -39,7 +39,7 @@ export default async function BookDetailPage({ params }: Props) {
           <p className={styles.author}>{book.author}</p>
           <div className={styles.meta}>
             <time className={styles.metaItem} dateTime={book.finishedAt}>
-              {new Date(book.finishedAt).toLocaleDateString("ko-KR")} 완독
+              {formatDate(book.finishedAt)} 완독
             </time>
             {book.publisher && (
               <>

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
+import { formatDate, slugTail } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
@@ -14,18 +15,18 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => bits.map((bit) => ({ slug: bit.slug.split("/").pop() }));
+export const generateStaticParams = () => bits.map((bit) => ({ slug: slugTail(bit.slug) }));
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const bit = bits.find((t) => t.slug.split("/").pop() === slug);
+  const bit = bits.find((t) => slugTail(t.slug) === slug);
   if (!bit) return {};
   return { title: bit.title };
 };
 
 export default async function BitsDetailPage({ params }: Props) {
   const { slug } = await params;
-  const bit = bits.find((t) => t.slug.split("/").pop() === slug);
+  const bit = bits.find((t) => slugTail(t.slug) === slug);
 
   if (!bit) notFound();
 
@@ -36,7 +37,7 @@ export default async function BitsDetailPage({ params }: Props) {
           <h1 className={styles.title}>{bit.title}</h1>
           <div className={styles.meta}>
             <time className={styles.date} dateTime={bit.date}>
-              {new Date(bit.date).toLocaleDateString("ko-KR")}
+              {formatDate(bit.date)}
             </time>
             {bit.tags.length > 0 && (
               <>

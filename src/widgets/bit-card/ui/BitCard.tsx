@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import { formatDate } from "@/shared/lib";
+import { Tag, TagList } from "@/shared/ui/Tag";
+
 import * as styles from "./BitCard.css";
 
 interface Props {
@@ -15,18 +18,16 @@ export function BitCard({ slug, title, date, tags }: Props) {
       <h2 className={styles.title}>{title}</h2>
       <div className={styles.meta}>
         <time className={styles.date} dateTime={date}>
-          {new Date(date).toLocaleDateString("ko-KR")}
+          {formatDate(date)}
         </time>
         {tags.length > 0 && (
           <>
             <span className={styles.dot}>·</span>
-            <div className={styles.tags}>
+            <TagList>
               {tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  #{tag}
-                </span>
+                <Tag key={tag}>#{tag}</Tag>
               ))}
-            </div>
+            </TagList>
           </>
         )}
       </div>

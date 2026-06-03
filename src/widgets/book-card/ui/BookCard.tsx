@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { formatDate, slugTail } from "@/shared/lib";
+
 import * as styles from "./BookCard.css";
 
 interface Props {
@@ -13,9 +15,9 @@ interface Props {
 }
 
 export function BookCard({ slug, title, author, finishedAt, genre, coverImage }: Props) {
-  const slugTail = slug.split("/").at(-1) ?? slug;
+  const tail = slugTail(slug);
   return (
-    <Link href={`/books/${slugTail}`} className={styles.root}>
+    <Link href={`/books/${tail}`} className={styles.root}>
       {coverImage && (
         <div className={styles.cover}>
           <Image src={coverImage} alt={title} fill className={styles.coverImg} sizes="44px" />
@@ -26,7 +28,7 @@ export function BookCard({ slug, title, author, finishedAt, genre, coverImage }:
         <p className={styles.author}>{author}</p>
         <div className={styles.bottom}>
           <time className={styles.date} dateTime={finishedAt}>
-            {new Date(finishedAt).toLocaleDateString("ko-KR")}
+            {formatDate(finishedAt)}
           </time>
           {genre && (
             <>
