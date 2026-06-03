@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { ThemeToggle } from "@/features/theme-toggle";
@@ -19,6 +20,13 @@ export function Header() {
       <div className={styles.inner}>
         <div className={styles.left}>
           <Link href="/" className={styles.logo}>
+            <Image
+              src="/favicon.svg"
+              alt={siteConfig.author.name}
+              width={24}
+              height={24}
+              className={styles.logoIcon}
+            />
             {siteConfig.author.name}
           </Link>
           <nav className={styles.nav}>

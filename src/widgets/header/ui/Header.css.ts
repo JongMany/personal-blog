@@ -22,6 +22,9 @@ export const inner = style({
 });
 
 export const logo = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "0.375rem",
   fontSize: vars.fontSize.sm,
   fontWeight: vars.fontWeight.semibold,
   color: vars.color.inkText,
@@ -33,6 +36,11 @@ export const logo = style({
       color: vars.color.primary,
     },
   },
+});
+
+export const logoIcon = style({
+  borderRadius: vars.radius.full,
+  flexShrink: 0,
 });
 
 export const left = style({
