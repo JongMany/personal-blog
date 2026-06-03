@@ -38,6 +38,8 @@ export const list = style({
   margin: "0 auto",
   paddingTop: "2rem",
   paddingBottom: "4rem",
+  paddingLeft: "1.5rem",
+  paddingRight: "1.5rem",
 });
 
 export { empty } from "@/shared/ui/empty.css";

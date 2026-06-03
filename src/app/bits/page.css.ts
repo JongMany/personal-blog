@@ -30,6 +30,8 @@ export const wrapper = style({
   maxWidth: layout.contentWidth,
   margin: "0 auto",
   paddingTop: "2rem",
+  paddingLeft: "1.5rem",
+  paddingRight: "1.5rem",
 });
 
 export const dateGroup = style({

@@ -7,6 +7,8 @@ export const wrapper = style({
   margin: "0 auto",
   paddingTop: "2rem",
   paddingBottom: "4rem",
+  paddingLeft: "1.5rem",
+  paddingRight: "1.5rem",
 });
 
 export const header = style({

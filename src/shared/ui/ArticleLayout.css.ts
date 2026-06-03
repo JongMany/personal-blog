@@ -7,4 +7,6 @@ export const article = style({
   margin: "0 auto",
   paddingTop: "2rem",
   paddingBottom: "5rem",
+  paddingLeft: "1.5rem",
+  paddingRight: "1.5rem",
 });
