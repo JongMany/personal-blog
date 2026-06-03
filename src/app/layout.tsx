@@ -8,6 +8,7 @@ import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
 import { darkTheme, lightTheme, siteConfig } from "@/shared/config";
 
+import { PageTransition } from "./_components/PageTransition";
 import * as styles from "./layout.css";
 
 export const metadata: Metadata = {
@@ -51,7 +52,9 @@ export default function RootLayout({
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Header />
-        <main className={styles.main}>{children}</main>
+        <main className={styles.main}>
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <Analytics />
       </body>
