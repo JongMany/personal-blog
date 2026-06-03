@@ -2,6 +2,10 @@ export type { Sprinkles } from "./sprinkles.css";
 export { sprinkles } from "./sprinkles.css";
 export { darkTheme, lightTheme, vars } from "./theme.css";
 
+export const layout = {
+  contentWidth: "42rem",
+} as const;
+
 export const siteConfig = {
   name: "Blog",
   description: "개발 경험, 생각, 포트폴리오를 담는 개인 웹사이트",

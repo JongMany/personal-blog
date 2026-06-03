@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "@/shared/config";
+import { layout, vars } from "@/shared/config";
 
 export const footer = style({
   borderTop: `1px solid ${vars.color.divider2}`,
@@ -9,7 +9,7 @@ export const footer = style({
 });
 
 export const inner = style({
-  maxWidth: "42rem",
+  maxWidth: layout.contentWidth,
   margin: "0 auto",
   padding: "1.5rem 1.5rem",
   display: "flex",

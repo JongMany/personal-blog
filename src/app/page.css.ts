@@ -1,9 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "@/shared/config";
+import { layout, vars } from "@/shared/config";
 
 export const page = style({
-  maxWidth: "42rem",
+  maxWidth: layout.contentWidth,
   margin: "0 auto",
   paddingTop: "2rem",
 });

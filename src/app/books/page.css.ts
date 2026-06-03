@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "@/shared/config";
+import { layout, vars } from "@/shared/config";
 
 export const header = style({
   paddingTop: "3rem",
@@ -34,7 +34,7 @@ export const yearLabel = style({
 });
 
 export const list = style({
-  maxWidth: "42rem",
+  maxWidth: layout.contentWidth,
   margin: "0 auto",
   paddingTop: "2rem",
   paddingBottom: "4rem",

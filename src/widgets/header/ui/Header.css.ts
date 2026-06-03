@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "@/shared/config";
+import { layout, vars } from "@/shared/config";
 
 export const header = style({
   position: "sticky",
@@ -12,7 +12,7 @@ export const header = style({
 });
 
 export const inner = style({
-  maxWidth: "42rem",
+  maxWidth: layout.contentWidth,
   margin: "0 auto",
   padding: "0 1.5rem",
   height: "3.5rem",
