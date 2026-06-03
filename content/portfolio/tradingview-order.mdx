@@ -1,0 +1,42 @@
+---
+title: TradingView 차트 주문 시스템
+summary: TradingView 차트에서 직접 주문할 수 있는 커스텀 오버레이 UI 시스템. 실시간 호가창 연동과 복잡한 주문 상태 관리를 포함.
+tags: ["React", "TypeScript", "TradingView", "WebSocket"]
+color: "#10b981"
+period: 2024.03 ~ 2024.09
+order: 2
+---
+
+## 개요
+
+TradingView 차트 위에 직접 주문을 넣을 수 있는 커스텀 오버레이 UI 시스템입니다. 차트 라이브러리의 제한된 커스터마이징 API를 우회해 풍부한 주문 인터페이스를 구현했습니다.
+
+## 주요 기능
+
+- TradingView Chart Library 커스텀 드로잉 플러그인
+- 실시간 WebSocket 호가창 데이터 연동
+- 지정가/시장가/조건부 주문 타입 지원
+- 주문 체결 시 차트 위 시각적 표시
+
+## 기술적 도전
+
+### TradingView API 제약 우회
+
+TradingView는 차트 위에 커스텀 UI를 렌더링하는 공식 API가 제한적입니다. 차트 컨테이너 DOM에 React 포털로 UI를 삽입하되, 차트의 `onVisibleRangeChange` 이벤트를 구독해 가격-픽셀 좌표 변환을 직접 계산했습니다.
+
+### 주문 상태 머신
+
+복잡한 주문 생명주기(대기 → 체결 → 부분체결 → 취소)를 XState 없이 Zustand 기반 상태 머신으로 모델링했습니다.
+
+```ts
+type OrderStatus = 'pending' | 'partial' | 'filled' | 'cancelled';
+
+const useOrderStore = create<OrderStore>((set) => ({
+  orders: [],
+  transition: (id, event) => set((state) => ({
+    orders: state.orders.map((o) =>
+      o.id === id ? applyTransition(o, event) : o
+    ),
+  })),
+}));
+```

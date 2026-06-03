@@ -1,0 +1,41 @@
+---
+title: 개인 블로그 시스템
+summary: Next.js App Router와 velite 기반의 개인 블로그. MDX 콘텐츠 관리, 다크모드, 페이지 전환 애니메이션을 포함한 풀스택 구현.
+tags: ["Next.js", "TypeScript", "vanilla-extract", "velite"]
+github: https://github.com/JongMany/blog
+color: "#3b82f6"
+period: 2025.12 ~ 진행 중
+order: 1
+---
+
+## 개요
+
+Next.js 16 App Router를 기반으로 한 개인 블로그 시스템입니다. MDX 기반 콘텐츠 관리, CSS-in-JS 스타일링, 그리고 자체 구현한 페이지 전환 애니메이션이 특징입니다.
+
+## 주요 기능
+
+- **velite** 기반 정적 콘텐츠 관리 (posts, bits, books, portfolio)
+- **vanilla-extract** CSS-in-JS로 타입 안전한 스타일링과 다크모드 지원
+- **MutationObserver 기반** 페이지 전환 페이드 애니메이션 (ssgoi 기법 내재화)
+- rehype-pretty-code를 활용한 코드 하이라이팅 (dark/light 테마 자동 전환)
+- Radix UI 컴포넌트 (Dialog, Tooltip, DropdownMenu)
+
+## 기술적 도전
+
+### 페이지 전환 애니메이션
+
+Next.js App Router에서 View Transitions API가 불안정해 직접 구현했습니다. MutationObserver로 DOM 변경을 감지하고, 제거되는 노드를 클론해 `position: absolute`로 재삽입한 뒤 페이드아웃 애니메이션을 적용합니다.
+
+```ts
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    mutation.removedNodes.forEach((node) => {
+      // 클론을 삽입해 퇴장 애니메이션 실행
+    });
+  }
+});
+```
+
+### 디자인 시스템
+
+Seed Design의 3계층 토큰 구조(scale → semantic → component)를 적용했습니다. `createThemeContract`로 타입 안전한 CSS 변수를 정의하고, 라이트/다크 테마를 클래스 기반으로 전환합니다.

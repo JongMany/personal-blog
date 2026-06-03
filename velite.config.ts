@@ -53,6 +53,24 @@ const books = defineCollection({
   }),
 });
 
+const projects = defineCollection({
+  name: "Project",
+  pattern: "portfolio/**/*.mdx",
+  schema: s.object({
+    title: s.string(),
+    summary: s.string().max(250),
+    tags: s.array(s.string()).default([]),
+    github: s.string().optional(),
+    demo: s.string().optional(),
+    thumbnail: s.string().optional(),
+    color: s.string().optional(),
+    period: s.string().optional(),
+    order: s.number().default(0),
+    slug: s.path(),
+    content: s.mdx(),
+  }),
+});
+
 export default defineConfig({
   root: "content",
   output: {
@@ -62,7 +80,7 @@ export default defineConfig({
     name: "[name]-[hash:8].[ext]",
     clean: true,
   },
-  collections: { posts, books, bits },
+  collections: { posts, books, bits, projects },
   mdx: {
     rehypePlugins: [[rehypePrettyCode, { theme: { dark: "github-dark", light: "github-light" } }]],
     remarkPlugins: [],
