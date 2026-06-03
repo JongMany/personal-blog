@@ -2,7 +2,9 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
+import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
+import { Tag, TagList } from "@/shared/ui/Tag";
 
 import * as styles from "./page.css";
 
@@ -29,35 +31,34 @@ export default async function BookDetailPage({ params }: Props) {
   if (!book) notFound();
 
   return (
-    <article className={styles.article}>
-      <header className={styles.header}>
-        {book.genre && <p className={styles.genre}>{book.genre}</p>}
-        <h1 className={styles.title}>{book.title}</h1>
-        <p className={styles.author}>{book.author}</p>
-        <div className={styles.meta}>
-          <time className={styles.metaItem} dateTime={book.finishedAt}>
-            {new Date(book.finishedAt).toLocaleDateString("ko-KR")} 완독
-          </time>
-          {book.publisher && (
-            <>
-              <span className={styles.dot}>·</span>
-              <span className={styles.metaItem}>{book.publisher}</span>
-            </>
-          )}
-        </div>
-        {book.tags.length > 0 && (
-          <div className={styles.tags}>
-            {book.tags.map((tag) => (
-              <span key={tag} className={styles.tag}>
-                #{tag}
-              </span>
-            ))}
+    <ArticleLayout
+      header={
+        <header className={styles.header}>
+          {book.genre && <p className={styles.genre}>{book.genre}</p>}
+          <h1 className={styles.title}>{book.title}</h1>
+          <p className={styles.author}>{book.author}</p>
+          <div className={styles.meta}>
+            <time className={styles.metaItem} dateTime={book.finishedAt}>
+              {new Date(book.finishedAt).toLocaleDateString("ko-KR")} 완독
+            </time>
+            {book.publisher && (
+              <>
+                <span className={styles.dot}>·</span>
+                <span className={styles.metaItem}>{book.publisher}</span>
+              </>
+            )}
           </div>
-        )}
-      </header>
-      <div className={styles.prose}>
-        <MDXContent code={book.content} />
-      </div>
-    </article>
+          {book.tags.length > 0 && (
+            <TagList>
+              {book.tags.map((tag) => (
+                <Tag key={tag}>#{tag}</Tag>
+              ))}
+            </TagList>
+          )}
+        </header>
+      }
+    >
+      <MDXContent code={book.content} />
+    </ArticleLayout>
   );
 }

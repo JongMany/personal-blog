@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { ViewTracker } from "@/features/view-counter";
+import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 
 import * as styles from "./page.css";
@@ -30,23 +31,24 @@ export default async function BlogDetailPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <article className={styles.article}>
-      <header className={styles.header}>
-        <p className={styles.category}>{post.category}</p>
-        <h1 className={styles.title}>{post.title}</h1>
-        <div className={styles.meta}>
-          <time className={styles.metaItem} dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString("ko-KR")}
-          </time>
-          <span className={styles.dot}>·</span>
-          <span className={styles.metaItem}>{post.readingTime}분 읽기</span>
-          <span className={styles.dot}>·</span>
-          <ViewTracker slug={slug} />
-        </div>
-      </header>
-      <div className={styles.prose}>
-        <MDXContent code={post.content} />
-      </div>
-    </article>
+    <ArticleLayout
+      header={
+        <header className={styles.header}>
+          <p className={styles.category}>{post.category}</p>
+          <h1 className={styles.title}>{post.title}</h1>
+          <div className={styles.meta}>
+            <time className={styles.metaItem} dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString("ko-KR")}
+            </time>
+            <span className={styles.dot}>·</span>
+            <span className={styles.metaItem}>{post.readingTime}분 읽기</span>
+            <span className={styles.dot}>·</span>
+            <ViewTracker slug={slug} />
+          </div>
+        </header>
+      }
+    >
+      <MDXContent code={post.content} />
+    </ArticleLayout>
   );
 }
