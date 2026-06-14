@@ -22,7 +22,7 @@ export const card = style({
 });
 
 export const accent = style({
-  height: "8rem",
+  height: "12rem",
   flexShrink: 0,
   backgroundColor: vars.color.paperSheet,
 });

@@ -17,6 +17,7 @@ const MdxImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 
 const mdxComponents = {
   img: MdxImage,
+  Image: MdxImage,
 };
 
 interface Props {

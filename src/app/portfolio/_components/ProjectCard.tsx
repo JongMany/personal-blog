@@ -10,22 +10,28 @@ interface Props {
   tags: string[];
   color?: string;
   period?: string;
+  thumbnail?: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const ProjectCard = ({ title, summary, tags, color, period, onClick }: Props) => (
+const accentStyle = (thumbnail?: string, color?: string) => {
+  if (thumbnail)
+    return {
+      backgroundImage: `url(${thumbnail})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center top",
+    };
+  if (color)
+    return {
+      background: `linear-gradient(135deg, ${color}33 0%, ${color}11 100%)`,
+      borderBottom: `2px solid ${color}44`,
+    };
+  return undefined;
+};
+
+export const ProjectCard = ({ title, summary, tags, color, period, thumbnail, onClick }: Props) => (
   <button className={styles.card} onClick={onClick}>
-    <div
-      className={styles.accent}
-      style={
-        color
-          ? {
-              background: `linear-gradient(135deg, ${color}33 0%, ${color}11 100%)`,
-              borderBottom: `2px solid ${color}44`,
-            }
-          : undefined
-      }
-    />
+    <div className={styles.accent} style={accentStyle(thumbnail, color)} />
     <div className={styles.body}>
       <p className={styles.title}>{title}</p>
       {tags.length > 0 && (

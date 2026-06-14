@@ -85,6 +85,7 @@ export const PortfolioClient = ({ projects }: Props) => {
             tags={project.tags}
             color={project.color}
             period={project.period}
+            thumbnail={project.thumbnail}
             onClick={(e) => handleCardClick(project, e)}
           />
         ))}
