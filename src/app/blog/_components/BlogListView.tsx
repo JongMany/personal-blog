@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { PostCard } from "@/widgets/post-card";
 
 import * as styles from "./BlogListView.css";
+import { SubTabs } from "./SubTabs";
 
 interface Post {
   slug: string;
@@ -93,6 +94,7 @@ export function BlogListView({ posts }: Props) {
 
   return (
     <div className={styles.wrapper}>
+      <SubTabs active="blog" />
       <header className={styles.header}>
         <h1 className={styles.title}>블로그</h1>
         <p className={styles.count}>총 {posts.length}편</p>

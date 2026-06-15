@@ -8,11 +8,32 @@ const posts = defineCollection({
     .object({
       title: s.string().max(99),
       date: s.isodate(),
-      category: s.enum(["개발", "회고", "기록", "경제"]),
+      category: s.enum(["개발", "회고", "기록"]),
       tags: s.array(s.string()).default([]),
       summary: s.string().max(300),
       draft: s.boolean().default(false),
       coverImage: s.string().optional(),
+      slug: s.path(),
+      raw: s.raw(),
+      content: s.mdx(),
+      toc: s.toc(),
+    })
+    .transform((data) => ({
+      ...data,
+      readingTime: Math.ceil(data.raw.split(/\s+/).length / 200),
+    })),
+});
+
+const economy = defineCollection({
+  name: "Economy",
+  pattern: "economy/**/*.mdx",
+  schema: s
+    .object({
+      title: s.string().max(99),
+      date: s.isodate(),
+      tags: s.array(s.string()).default([]),
+      summary: s.string().max(300),
+      draft: s.boolean().default(false),
       slug: s.path(),
       raw: s.raw(),
       content: s.mdx(),
@@ -80,7 +101,7 @@ export default defineConfig({
     name: "[name]-[hash:8].[ext]",
     clean: true,
   },
-  collections: { posts, books, bits, projects },
+  collections: { posts, economy, books, bits, projects },
   mdx: {
     rehypePlugins: [[rehypePrettyCode, { theme: { dark: "github-dark", light: "github-light" } }]],
     remarkPlugins: [],

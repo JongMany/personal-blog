@@ -16,7 +16,7 @@ export const siteConfig = {
     github: "https://github.com/JongMany",
     linkedin: "https://www.linkedin.com/in/%EC%A2%85%EB%AF%BC-%EC%9D%B4-557572284/",
   },
-  categories: ["개발", "회고", "기록", "경제"] as const,
+  categories: ["개발", "회고", "기록"] as const,
 } as const;
 
 export type Category = (typeof siteConfig.categories)[number];

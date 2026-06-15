@@ -10,23 +10,38 @@ interface Props {
   title: string;
   summary: string;
   date: string;
-  category: string;
+  category?: string;
   readingTime: number;
+  basePath?: string;
+  viewSlug?: string;
 }
 
-export function PostCard({ slug, title, summary, date, category, readingTime }: Props) {
+export function PostCard({
+  slug,
+  title,
+  summary,
+  date,
+  category,
+  readingTime,
+  basePath = "/blog",
+  viewSlug,
+}: Props) {
   return (
-    <Link href={`/blog/${slug}`} className={styles.root}>
+    <Link href={`${basePath}/${slug}`} className={styles.root}>
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.summary}>{summary}</p>
       <div className={styles.meta}>
         <span className={styles.metaItem}>{formatDate(date)}</span>
-        <span className={styles.dot}>·</span>
-        <span className={styles.metaItem}>{category}</span>
+        {category && (
+          <>
+            <span className={styles.dot}>·</span>
+            <span className={styles.metaItem}>{category}</span>
+          </>
+        )}
         <span className={styles.dot}>·</span>
         <span className={styles.metaItem}>약 {readingTime}분</span>
         <span className={styles.dot}>·</span>
-        <ViewCount slug={slug} />
+        <ViewCount slug={viewSlug ?? slug} />
       </div>
     </Link>
   );
