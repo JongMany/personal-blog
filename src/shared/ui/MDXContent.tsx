@@ -1,6 +1,8 @@
 import * as runtime from "react/jsx-runtime";
 import NextImage from "next/image";
 
+import { Callout } from "./Callout";
+
 const MdxImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
   if (!props.src || typeof props.src !== "string") return null;
   return (
@@ -18,6 +20,7 @@ const MdxImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 const mdxComponents = {
   img: MdxImage,
   Image: MdxImage,
+  Callout,
 };
 
 interface Props {
