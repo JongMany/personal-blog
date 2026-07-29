@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BookCard } from "@/widgets/book-card";
 import { PostCard } from "@/widgets/post-card";
 import { siteConfig } from "@/shared/config";
-import { slugTail } from "@/shared/lib";
+import { compareByDateDescThenSlugDesc, slugTail } from "@/shared/lib";
 import { GithubIcon } from "@/shared/ui/icons/GithubIcon";
 import { LinkedinIcon } from "@/shared/ui/icons/LinkedinIcon";
 
@@ -17,7 +17,7 @@ const recentPosts = [...posts]
   .slice(0, 3);
 
 const recentBits = [...bits]
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .sort(compareByDateDescThenSlugDesc)
   .slice(0, 5);
 
 const recentBooks = [...books]

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { BitCard } from "@/widgets/bit-card";
-import { formatDate, slugTail } from "@/shared/lib";
+import { compareByDateDescThenSlugDesc, formatDate, slugTail } from "@/shared/lib";
 
 import * as styles from "./page.css";
 
@@ -12,9 +12,7 @@ export const metadata: Metadata = {
   description: "배운 것들을 짧게 기록합니다.",
 };
 
-const sortedBits = [...bits].sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-);
+const sortedBits = [...bits].sort(compareByDateDescThenSlugDesc);
 
 const grouped = sortedBits.reduce<Record<string, typeof sortedBits>>((acc, bit) => {
   const key = formatDate(bit.date);
