@@ -1,0 +1,151 @@
+---
+title: Node.js 아키텍처
+date: 2026-07-29
+tags: [Node.js, CS]
+---
+
+#### 고층 빌딩 건축 현장 비유
+
+Node.js = 거대한 고층 빌딩 건축 현장
+
+현장을 굴러가게 만드는 4가지 부품
+
+1. Call Stack
+
+   v8 엔진 내부에는 2가지 공간이 존재함
+   - Memory Heap: 변수나 데이터 저장
+   - Call Stack: 실제 코드가 실행되는 공간
+
+   콜스택은 건축 설계도(작성된 코드)를 읽고 지시를 내리는 총괄 현장 소장 역할
+   - 한 장씩 쌓아두고 지시가 끝나면 하나씩 치운다. (LIFO)
+   - 소장이 혼자서 모든 일을 직접 처리하면 현장이 마비가 될텐데 이것이 블로킹 현상임
+
+     ```typescript
+     const fs = require("fs");
+     const 도면 = fs.readFileSync("10기가바이트_도면.txt"); // 동기적 처리 (끝날 때까지 여기서 대기)
+     ```
+
+     ```typescript
+     setInterval(() => {
+       console.log("1초 타이머 실행"); // 영원히 출력 불가능
+     }, 1000);
+
+     while (true) {} // 영원히 끝나지 않는 코드
+     ```
+
+2. libuv (C++ Core)
+
+   강력한 대형 하청업체 & 시공반
+   - 설계도를 읽다가 무거운 I/O 작업 발견시 Call Stack이 직접 처리하지 않고, libuv에게 위임(throw)
+   - libuv 내부에는 무거운 작업을 대신 처리하는 스레드 풀(전문 시공반 일꾼들) 조직이 존재함
+
+   Node.js는 단 한명의 싱글 스레드(소장님)과 다수의 보조 스레드(일꾼들)가 협업하는 구조
+   - Main Thread + libuv Thread
+   - 여러 일꾼들이 동시에 작업하여 겉보기엔 완벽한 멀티스레드처럼 빠른 속도로 동작
+
+   ```typescript
+   const fs = require("fs");
+   const crypto = require("crypto");
+
+   fs.readFile("건축자재.txt", (error, data) => {
+     // 비동기 실행
+   });
+
+   crypto.pbkdf2("비밀번호1", "소금", 100000, 64, "sha512", (error, derivedKey) => {
+     // 암호 완성 후 실행될 부분
+   });
+   ```
+
+   비동기 함수는 지시와 함께 작업 완료 후 실행할 '콜백 함수'를 묶어서 전달함
+   - 지시를 던진 메인 스레드는 작업을 기다리지 않고 즉시 다음 줄의 코드를 실행함
+
+3. Event Queue
+
+   작업 완료 보고서 대기함
+   - libuv의 일꾼들이 백그라운드에서 철근을 다 깔고나면, 소장님께 작업이 끝났다고 보고를 하기 위한 서류를 순서대로 놓음
+   - FIFO 구조
+
+4. Event Loop
+
+   보고서 결재 타이밍을 통제하는 깐깐한 현장 순찰 반장
+   - Call Stack과 Event Queue만 번갈아서 주시함
+   - Call Stack에 도면이 있는 경우 중간에 결재 서류를 넣어 흐름을 끊지 않음 / Call Stack에 도면이 없는 경우에만 Event Queue에서 가장 먼저 도착한 결재 서류를 넣음
+
+#### 이벤트 루프 6단계 심층 해부
+
+6개의 정거장을 순서대로 도는 순찰 반장의 순환 버스
+
+대기함이 6개로 나눈 이유? 모든 작업이 하나로 몰린다면 치명적인 병목 현상이 발생할 수 있음
+
+- 큐를 책임에 따라 분리하여 처리 (`uv__run_timers`, `uv__run_pending`, `uv__run_idle`, `uv__run_prepare`, `uv__run_poll`, `uv__run_check`)
+- 특정 작업의 독점을 방지하고, 공평하고 효율적인 자원 할당을 구현
+
+1. Timer
+   - setTimer, setInterval
+
+2. Pending Callbacks
+
+   밀린 긴급 오류 보고서 처리
+   - OS에서 직접 보내는 에러들 (TCP Error)
+
+3. Idle / Prepare
+   - 내부 정비 타이밍 (시스템 고유 영역)
+
+4. Poll
+   - 모든 입출력 장치의 집결지 (I/O Events, Callbacks)
+
+5. Check
+   - 무거운 I/O 직후 가장 빠른 실행 (새치기 전용 창구)
+   - setImmediate (Poll 작업 끝나자마자 즉시 실행 지시)
+
+6. Close Callback
+   - 안전한 리소스 종료
+   - 메모리 누수를 차단하는 핵심 방어선
+
+7. MicroTask Queue
+   - 6개의 정거장을 무시하는 VIP 대기열
+   - process.nextTick (Promise보다 우선)
+     - nextTickQueue
+   - Promise
+     - microTaskQueue
+   - 매정거장 사이, 콜스택이 빌 때마다 위 2개의 큐를 확인
+
+   이러한 내부 구조를 잘못 사용하면 다른 비동기 콜백들을 실행하지 못하는 기아 현상(Starvation)이 발생할 수 있음
+   - 기아 현상: 특정 작업이 우선순위가 높은 다른 작업들에 밀리는 상태 (결국 우선순위가 낮은 작업들은 영원히 CPU 실행 기회(자원)을 할당받지 못함)
+
+   ```typescript
+   // 끝나지 않는 프로미스 체인
+   Promise.resolve().then(function loop() {
+     return Promise.resolve().then(loop);
+   });
+
+   // 기아 현상
+   setTimeout(() => {
+     console.log("알람: 영원히 도착 못함");
+   }, 0);
+
+   const 무한_VIP_생성 = () => {
+     process.nextTick(() => {
+       console.log("독점 중..");
+       무한_VIP_생성();
+     });
+   };
+
+   무한_VIP_생성();
+   ```
+
+---
+
+#### Node.js = 싱글 스레드 vs 멀티 스레드?
+
+개발자가 코드를 짜는 환경은 싱글 스레드로 동작
+Node.js 시스템 런타임의 밑바탕에는 하청업체(libuv)가 자체적으로 여러명의 일꾼을 부리며 멀티 스레드로 동작함.
+
+Node.js = 싱글 스레드 (공식문서)
+
+- 우리가 작성하는 JS 코드는 오직 하나의 메인 콜스택 스레드에 의해서만 실행되기 때문임
+
+흔한 오해 = Node.js = 메인 스레드 + 이벤트 루프 스레드 = 총 2개의 스레드
+
+- 이벤트 루프는 독립적인 스레드가 아님
+- **이벤트 루프는 철저히 메인 스레드 내부에서 함께 실행되며, 비동기 작업들의 순서를 조율하는 시스템 로직임**
