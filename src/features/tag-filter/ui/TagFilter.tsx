@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib";
 
-import * as styles from "./TechFilter.css";
+import * as styles from "./TagFilter.css";
 
 interface Props {
   tags: string[];
@@ -8,7 +8,7 @@ interface Props {
   onChange: (tag: string | null) => void;
 }
 
-export const TechFilter = ({ tags, active, onChange }: Props) => (
+export const TagFilter = ({ tags, active, onChange }: Props) => (
   <div className={styles.bar}>
     <button
       className={cn(styles.chip, active === null ? styles.activeChip : "")}

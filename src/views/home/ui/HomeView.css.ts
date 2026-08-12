@@ -144,11 +144,6 @@ export const timelineMeta = style({
   minWidth: 0,
 });
 
-export const timelineDot = style({
-  fontSize: vars.fontSize.xs,
-  color: vars.color.divider3,
-});
-
 export const timelineTags = style({
   display: "flex",
   gap: "0.375rem",

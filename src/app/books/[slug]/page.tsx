@@ -2,31 +2,30 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
-import { formatDate, slugTail } from "@/shared/lib";
+import { findBookBySlug, getBookStaticParams } from "@/entities/book";
+import { formatDate } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
 
 import * as styles from "./page.css";
 
-import { books } from "#velite";
-
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => books.map((book) => ({ slug: slugTail(book.slug) }));
+export const generateStaticParams = getBookStaticParams;
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const book = books.find((b) => slugTail(b.slug) === slug);
+  const book = findBookBySlug(slug);
   if (!book) return {};
   return { title: `${book.title} — ${book.author}` };
 };
 
 export default async function BookDetailPage({ params }: Props) {
   const { slug } = await params;
-  const book = books.find((b) => slugTail(b.slug) === slug);
+  const book = findBookBySlug(slug);
 
   if (!book) notFound();
 

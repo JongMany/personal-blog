@@ -3,30 +3,29 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { ViewTracker } from "@/features/view-counter";
-import { formatDate, slugTail } from "@/shared/lib";
+import { findEconomyBySlug, getEconomyStaticParams } from "@/entities/post";
+import { formatDate } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 
 import * as styles from "../../[slug]/page.css";
 
-import { economy } from "#velite";
-
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => economy.map((post) => ({ slug: slugTail(post.slug) }));
+export const generateStaticParams = getEconomyStaticParams;
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const post = economy.find((p) => slugTail(p.slug) === slug);
+  const post = findEconomyBySlug(slug);
   if (!post) return {};
   return { title: post.title, description: post.summary };
 };
 
 export default async function EconomyDetailPage({ params }: Props) {
   const { slug } = await params;
-  const post = economy.find((p) => slugTail(p.slug) === slug);
+  const post = findEconomyBySlug(slug);
 
   if (!post) notFound();
 

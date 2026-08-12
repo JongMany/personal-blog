@@ -2,22 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { BlogTabs } from "@/widgets/blog-tabs";
 import { PostCard } from "@/widgets/post-card";
+import type { PostListItem } from "@/entities/post";
 
 import * as styles from "./BlogListView.css";
-import { SubTabs } from "./SubTabs";
-
-interface Post {
-  slug: string;
-  title: string;
-  summary: string;
-  date: string;
-  category: string;
-  readingTime: number;
-}
 
 interface Props {
-  posts: Post[];
+  posts: PostListItem[];
 }
 
 const BREAKPOINT = 590;
@@ -40,10 +32,9 @@ export function BlogListView({ posts }: Props) {
   const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevMobileRef = useRef(typeof window !== "undefined" && window.innerWidth <= BREAKPOINT);
 
-  const categories = [...new Set(posts.map((p) => p.category))].sort();
-  const filtered = displayed ? posts.filter((p) => p.category === displayed) : posts;
+  const categories = [...new Set(posts.map((post) => post.category))].sort();
+  const filtered = displayed ? posts.filter((post) => post.category === displayed) : posts;
 
-  // 브레이크포인트 crossing 감지 → nav fade 처리
   useEffect(() => {
     const handler = () => {
       const mobile = window.innerWidth <= BREAKPOINT;
@@ -66,7 +57,6 @@ export function BlogListView({ posts }: Props) {
     };
   }, []);
 
-  // 카테고리 선택 시 모바일 인디케이터 위치 업데이트
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
@@ -82,19 +72,19 @@ export function BlogListView({ posts }: Props) {
     []
   );
 
-  const handleSelect = (cat: string | null) => {
-    if (cat === selected) return;
-    setSelected(cat);
+  const handleSelect = (category: string | null) => {
+    if (category === selected) return;
+    setSelected(category);
     setListExiting(true);
     listTimerRef.current = setTimeout(() => {
-      setDisplayed(cat);
+      setDisplayed(category);
       setListExiting(false);
     }, LIST_FADE);
   };
 
   return (
     <div className={styles.wrapper}>
-      <SubTabs active="blog" />
+      <BlogTabs active="blog" />
       <header className={styles.header}>
         <h1 className={styles.title}>블로그</h1>
         <p className={styles.count}>총 {posts.length}편</p>
@@ -140,14 +130,14 @@ export function BlogListView({ posts }: Props) {
             >
               전체
             </button>
-            {categories.map((cat) => (
+            {categories.map((category) => (
               <button
-                key={cat}
-                data-active={selected === cat}
-                className={`${styles.categoryBtn} ${selected === cat ? styles.categoryBtnActive : ""}`}
-                onClick={() => handleSelect(cat)}
+                key={category}
+                data-active={selected === category}
+                className={`${styles.categoryBtn} ${selected === category ? styles.categoryBtnActive : ""}`}
+                onClick={() => handleSelect(category)}
               >
-                {cat}
+                {category}
               </button>
             ))}
           </nav>

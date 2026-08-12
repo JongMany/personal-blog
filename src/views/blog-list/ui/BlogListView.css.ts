@@ -28,7 +28,6 @@ export const count = style({
   color: vars.color.inkTextSubtle,
 });
 
-/* 데스크톱 기본: 가로 flex */
 export const body = style({
   display: "flex",
   flexDirection: "row",
@@ -36,7 +35,6 @@ export const body = style({
   alignItems: "flex-start",
 });
 
-/* 모바일: 세로 flex (JS로 토글) */
 export const bodyMobile = style({
   flexDirection: "column",
   gap: 0,
@@ -45,7 +43,7 @@ export const bodyMobile = style({
 export const list = style({
   flex: 1,
   minWidth: 0,
-  transition: `opacity 160ms ease`,
+  transition: "opacity 160ms ease",
 });
 
 export const listExiting = style({
@@ -54,7 +52,6 @@ export const listExiting = style({
 
 export { empty } from "@/shared/ui/empty.css";
 
-/* 데스크톱 사이드바: 세로 목록 */
 export const sidebar = style({
   flexShrink: 0,
   width: "6rem",
@@ -70,7 +67,6 @@ export const sidebar = style({
   },
 });
 
-/* 모바일 사이드바: 가로 탭 바 (JS로 토글) */
 export const sidebarMobile = style({
   position: "relative",
   width: "100%",

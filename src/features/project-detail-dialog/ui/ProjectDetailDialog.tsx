@@ -11,7 +11,7 @@ import { GithubIcon } from "@/shared/ui/icons/GithubIcon";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
 
-import * as styles from "./ProjectDetail.css";
+import * as styles from "./ProjectDetailDialog.css";
 
 interface Project {
   title: string;
@@ -29,7 +29,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const ProjectDetail = ({ project, cardRect, open, onClose }: Props) => {
+export const ProjectDetailDialog = ({ project, cardRect, open, onClose }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 

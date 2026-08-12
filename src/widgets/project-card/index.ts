@@ -1,1 +1,1 @@
-export {};
+export { ProjectCard } from "./ui/ProjectCard";

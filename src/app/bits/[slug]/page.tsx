@@ -2,31 +2,30 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
-import { formatDate, slugTail } from "@/shared/lib";
+import { findBitBySlug, getBitStaticParams } from "@/entities/bit";
+import { formatDate } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
 
 import * as styles from "./page.css";
 
-import { bits } from "#velite";
-
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => bits.map((bit) => ({ slug: slugTail(bit.slug) }));
+export const generateStaticParams = getBitStaticParams;
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const bit = bits.find((t) => slugTail(t.slug) === slug);
+  const bit = findBitBySlug(slug);
   if (!bit) return {};
   return { title: bit.title };
 };
 
 export default async function BitsDetailPage({ params }: Props) {
   const { slug } = await params;
-  const bit = bits.find((t) => slugTail(t.slug) === slug);
+  const bit = findBitBySlug(slug);
 
   if (!bit) notFound();
 

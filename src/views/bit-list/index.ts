@@ -1,1 +1,1 @@
-export {};
+export { BitListView } from "./ui/BitListView";

@@ -1,1 +1,1 @@
-export {};
+export { TagFilter } from "./ui/TagFilter";

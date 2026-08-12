@@ -1,1 +1,1 @@
-export {};
+export { HomeView } from "./ui/HomeView";

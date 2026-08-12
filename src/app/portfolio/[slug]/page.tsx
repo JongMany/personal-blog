@@ -3,31 +3,29 @@ import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
-import { slugTail } from "@/shared/lib";
+import { findProjectBySlug, getProjectStaticParams } from "@/entities/project";
 import { GithubIcon } from "@/shared/ui/icons/GithubIcon";
 import { MDXContent } from "@/shared/ui/MDXContent";
 import { Tag, TagList } from "@/shared/ui/Tag";
 
 import * as styles from "./page.css";
 
-import { projects } from "#velite";
-
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => projects.map((p) => ({ slug: slugTail(p.slug) }));
+export const generateStaticParams = getProjectStaticParams;
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const project = projects.find((p) => slugTail(p.slug) === slug);
+  const project = findProjectBySlug(slug);
   if (!project) return {};
   return { title: project.title, description: project.summary };
 };
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const project = projects.find((p) => slugTail(p.slug) === slug);
+  const project = findProjectBySlug(slug);
   if (!project) notFound();
 
   return (

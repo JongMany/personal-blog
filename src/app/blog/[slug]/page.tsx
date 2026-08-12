@@ -3,30 +3,29 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { ViewTracker } from "@/features/view-counter";
-import { formatDate, slugTail } from "@/shared/lib";
+import { findPostBySlug, getPostStaticParams } from "@/entities/post";
+import { formatDate } from "@/shared/lib";
 import { ArticleLayout } from "@/shared/ui/ArticleLayout";
 import { MDXContent } from "@/shared/ui/MDXContent";
 
 import * as styles from "./page.css";
 
-import { posts } from "#velite";
-
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const generateStaticParams = () => posts.map((post) => ({ slug: slugTail(post.slug) }));
+export const generateStaticParams = getPostStaticParams;
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const post = posts.find((p) => slugTail(p.slug) === slug);
+  const post = findPostBySlug(slug);
   if (!post) return {};
   return { title: post.title, description: post.summary };
 };
 
 export default async function BlogDetailPage({ params }: Props) {
   const { slug } = await params;
-  const post = posts.find((p) => slugTail(p.slug) === slug);
+  const post = findPostBySlug(slug);
 
   if (!post) notFound();
 

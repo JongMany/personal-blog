@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { cn } from "@/shared/lib";
 
-import * as styles from "./SubTabs.css";
+import * as styles from "./BlogTabs.css";
 
 const tabs = [
   { href: "/blog", label: "블로그", key: "blog" },
@@ -13,7 +13,7 @@ interface Props {
   active: "blog" | "economy";
 }
 
-export function SubTabs({ active }: Props) {
+export function BlogTabs({ active }: Props) {
   return (
     <nav className={styles.bar}>
       {tabs.map((tab) => (
